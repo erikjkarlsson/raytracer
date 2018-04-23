@@ -56,11 +56,7 @@ int main()
   int rect_width = WIDTH / RAY_AMOUNT;
   ray ray_array[RAY_AMOUNT];  
 
-<<<<<<< HEAD
-  bool shooting = false; 
-=======
   bool shooting = false;
->>>>>>> 07f26b54f877c2323d34275b8e720c7a607c98e9
    
   auto time_start   =   std::chrono::steady_clock::now();
   auto time_end     =   std::chrono::steady_clock::now();
@@ -71,27 +67,18 @@ int main()
   sf::Texture Tshands;
 
   
-<<<<<<< HEAD
+
   if (!Thands.loadFromFile("img/hands.png"))
-=======
-  if (!Thands.loadFromFile("images/hands.png"))
->>>>>>> 07f26b54f877c2323d34275b8e720c7a607c98e9
     {
       std::cout << "Can't load texture" << std::endl;
       return 0;
     }
-<<<<<<< HEAD
+
   if (!Tshands.loadFromFile("img/hands_lambda.png")) 
     {
       std::cout << "Can't load texture" << std::endl;
-=======
-  if (!Tshands.loadFromFile("images/lambda.png"))
-    {
-      std::cout << "Cant load texture" << std::endl;
->>>>>>> 07f26b54f877c2323d34275b8e720c7a607c98e9
-      return 0;
-    } 
-
+    }
+  
   sf::Sprite hands(Thands);
   sf::Sprite shands(Tshands);
   
@@ -109,11 +96,6 @@ int main()
       if(player_swing >= PI) player_swing = 0;
    
       ray_trace(&m, &p, ray_array);   
-<<<<<<< HEAD
-             
-=======
-            
->>>>>>> 07f26b54f877c2323d34275b8e720c7a607c98e9
       handle_input(&player_swing, (double)time_diff_ms, &window, &p, &m, &shooting);      
       draw(player_swing_set, rect_width, ray_array, &window, &p, &m, &hands, &shands,(double)time_diff_ms, &shooting);
   

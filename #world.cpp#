@@ -1,3 +1,4 @@
+
 #ifndef WORLD_CPP
 #define WORLD_CPP
 
@@ -361,7 +362,11 @@ draw(double player_swing_set, short rect_width, ray *array_pointer, sf::RenderWi
     pos    =  hands->getPosition();
   }
 
-  Dhands.setPosition(sf::Vector2f(pos.x, pos.y - 80 + 2 * player_swing_set ));
+<<<<<<< HEAD
+  Dhands.setPosition(sf::Vector2f(pos.x, pos.y - HAND_HEIGHT - 2 * player_swing_set));
+=======
+  Dhands.setPosition(sf::Vector2f(pos.x, pos.y - 80 + (time_diff / 100000000) * player_swing_set ));
+>>>>>>> 07f26b54f877c2323d34275b8e720c7a607c98e9
   window->draw(Dhands);
 
 }
