@@ -21,7 +21,7 @@
 #define CHOPPY false
 
 #define PI     3.14159265
-#define SPEED  0.00000001
+#define SPEED  0.000000005
 
 #define BOBB_SCALE 0.000001
 #define TURN_SCALE 0.000000003
@@ -30,6 +30,7 @@
 #define MAX_RGB 255
 #define CLOSE 0
     
+#define HAND_HEIGHT 80
 
 struct Vector2 { double x; double y;
   Vector2(double X, double Y){
@@ -203,7 +204,8 @@ handle_input(double *player_swing, double time_diff, sf::RenderWindow *window, P
 
       p->x += SPEED * cos(p->dir) * time_diff;
       p->y += SPEED * sin(p->dir) * time_diff;
-      *player_swing += PI / (BOBB_SCALE * time_diff);
+      *player_swing += ((PI / (BOBB_SCALE)) * (time_diff) / 470000000000000);
+      std::cout << ((PI / (BOBB_SCALE)) * (time_diff) / 470000000000000) << std::endl;
 
       
     }
@@ -216,7 +218,7 @@ handle_input(double *player_swing, double time_diff, sf::RenderWindow *window, P
 
       p->x -= SPEED * cos(p->dir) * time_diff;
       p->y -= SPEED * sin(p->dir) * time_diff;
-      *player_swing += PI / (BOBB_SCALE * time_diff);
+      *player_swing += ((int)(PI / (BOBB_SCALE)) * ((int)time_diff) / 470000000000000);
 
     }
   
@@ -359,7 +361,11 @@ draw(double player_swing_set, short rect_width, ray *array_pointer, sf::RenderWi
     pos    =  hands->getPosition();
   }
 
+<<<<<<< HEAD
+  Dhands.setPosition(sf::Vector2f(pos.x, pos.y - HAND_HEIGHT - 2 * player_swing_set));
+=======
   Dhands.setPosition(sf::Vector2f(pos.x, pos.y - 80 + (time_diff / 100000000) * player_swing_set ));
+>>>>>>> 07f26b54f877c2323d34275b8e720c7a607c98e9
   window->draw(Dhands);
 
 }

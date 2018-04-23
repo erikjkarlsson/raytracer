@@ -5,16 +5,16 @@
 #include <cstdint>
 #include <iostream>
 #include <vector> 
-#include <unistd.h>
+#include <unistd.h> 
 #include <thread>
 #include <chrono>
-
+ 
 #include "world.cpp"
 #include "player.cpp"
   
 int main()
 {  
- 
+  
   sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "ray_tracer_test");
   
   double player_swing     = 0;
@@ -56,7 +56,11 @@ int main()
   int rect_width = WIDTH / RAY_AMOUNT;
   ray ray_array[RAY_AMOUNT];  
 
+<<<<<<< HEAD
+  bool shooting = false; 
+=======
   bool shooting = false;
+>>>>>>> 07f26b54f877c2323d34275b8e720c7a607c98e9
    
   auto time_start   =   std::chrono::steady_clock::now();
   auto time_end     =   std::chrono::steady_clock::now();
@@ -67,14 +71,24 @@ int main()
   sf::Texture Tshands;
 
   
+<<<<<<< HEAD
+  if (!Thands.loadFromFile("img/hands.png"))
+=======
   if (!Thands.loadFromFile("images/hands.png"))
+>>>>>>> 07f26b54f877c2323d34275b8e720c7a607c98e9
     {
-      std::cout << "Cant load texture" << std::endl;
+      std::cout << "Can't load texture" << std::endl;
       return 0;
     }
+<<<<<<< HEAD
+  if (!Tshands.loadFromFile("img/hands_lambda.png")) 
+    {
+      std::cout << "Can't load texture" << std::endl;
+=======
   if (!Tshands.loadFromFile("images/lambda.png"))
     {
       std::cout << "Cant load texture" << std::endl;
+>>>>>>> 07f26b54f877c2323d34275b8e720c7a607c98e9
       return 0;
     } 
 
@@ -95,7 +109,11 @@ int main()
       if(player_swing >= PI) player_swing = 0;
    
       ray_trace(&m, &p, ray_array);   
+<<<<<<< HEAD
+             
+=======
             
+>>>>>>> 07f26b54f877c2323d34275b8e720c7a607c98e9
       handle_input(&player_swing, (double)time_diff_ms, &window, &p, &m, &shooting);      
       draw(player_swing_set, rect_width, ray_array, &window, &p, &m, &hands, &shands,(double)time_diff_ms, &shooting);
   
@@ -108,7 +126,7 @@ int main()
       time_diff_ms =  (time_end - time_start).count();
          
     }    
-      return 0;
+      return 0; 
 }
    
  
