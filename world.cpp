@@ -180,7 +180,7 @@ multi_char_OR(char C1, short char_amount, char *C2)
 
 
 void
-handle_input(double *player_swing, double time_diff, sf::RenderWindow *window, Player *p, Map *m)
+handle_input(double *player_swing, double time_diff, sf::RenderWindow *window, Player *p, Map *m, bool *shooting)
 {
   sf::Event event;
   while (window->pollEvent(event))
@@ -249,7 +249,11 @@ handle_input(double *player_swing, double time_diff, sf::RenderWindow *window, P
     }else if (r.character == 'o' and r.distance < 2){
       m->change_item(r.c_x, r.c_y, 'c');
     }
+    p->isShooting = true;
+  }else{
+    p->isShooting = false;
   }
+  
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
     
     p->fov -= TURN_SCALE * time_diff;
@@ -265,7 +269,7 @@ handle_input(double *player_swing, double time_diff, sf::RenderWindow *window, P
 
 
 void
-draw(double player_swing_set, short rect_width, ray *array_pointer, sf::RenderWindow *window, Player *p, Map *m, sf::Sprite *hands)
+draw(double player_swing_set, short rect_width, ray *array_pointer, sf::RenderWindow *window, Player *p, Map *m, sf::Sprite *hands, sf::Sprite *shands, double time_diff, bool *shooting)
 {
 
   /* Sky and floor O(HEIGHT) */
@@ -343,11 +347,21 @@ draw(double player_swing_set, short rect_width, ray *array_pointer, sf::RenderWi
     
     window->draw(rectangle);
   }
+  /* Draw hands */
+  sf::Sprite Dhands;
+  sf::Vector2f pos;
+    
+  if (p->isShooting){
+    Dhands = *shands;
+    pos    =  shands->getPosition();
+  }else{
+    Dhands = *hands;
+    pos    =  hands->getPosition();
+  }
 
-  sf::Sprite Dhands = *hands;
-  sf::Vector2f pos = hands->getPosition();
-  Dhands.setPosition(sf::Vector2f(pos.x, pos.y + 10 * player_swing_set));
+  Dhands.setPosition(sf::Vector2f(pos.x, pos.y - 80 + (time_diff / 100000000) * player_swing_set ));
   window->draw(Dhands);
+
 }
 
 

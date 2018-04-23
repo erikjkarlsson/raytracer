@@ -17,6 +17,8 @@ struct Player
   double  y    = 0;
   double  dir  = 0;
   double  fov  = 3.14 / 4.0;
+
+  bool isShooting = false;
 };
 
 struct sprite_128C{};

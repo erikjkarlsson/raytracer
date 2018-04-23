@@ -21,41 +21,42 @@ int main()
   double player_swing_set = 0; 
           
   Player p;    
-  p.dir = PI / 4.0;
+  p.dir = PI / 4.0; 
   p.x   = 3;
   p.y   = 3;  
   p.fov = (2 * PI) / PI; 
-    
+     
   Map m;       
      
-  m.add("########################################################");
-  m.add("#          #                                           #");
-  m.add("#          o                            rrrrrrr        #");
-  m.add("#          o                            r     r        #");
-  m.add("#          #                            r     r        #");
-  m.add("####cc######                            rrrrrrr        #"); 
-  m.add("#                                                      #");
-  m.add("#                                       ggggggg        #");
-  m.add("#                                       g     g        #");
-  m.add("#                                       g     g        #");
-  m.add("#                                       ggggggg        #");
-  m.add("#                                                      #");
+  m.add("#ggggggggggg####rgbrgb################rrrrr#############");
+  m.add("g          #   #      #   c   #      #     #      #    #");
+  m.add("g          c   c      #   #   #      #     #      #    #");
+  m.add("g          #   #      #   r   ###c####     c      #c####");
+  m.add("g          #   #      c   #          #     #      c    #");
+  m.add("#####c##############c############c####     ######c######"); 
+  m.add("#                             #      #     #           #");
+  m.add("#                             #      c     c           #");
+  m.add("#                      p      #      #     #           #");
+  m.add("#                             ##c############g#r#c#r#g##");
+  m.add("#                                          #           #");
+  m.add("#                                          #           #");
+  m.add("#   #    #                                 ######c######");
+  m.add("#   #    #                                             #"); 
   m.add("#   #    #                                             #");
-  m.add("#   #    #                              bbbbbbb        #"); 
-  m.add("#   #    #                              b     b        #");
-  m.add("#   ######                              bbbbbbb        #");
   m.add("#                                                      #");
-  m.add("#   wwwwwww     WWWWWWW     HHHHHHH     ttttttt        #");
-  m.add("#   w     w     W     W     H     H     t     t        #"); 
-  m.add("#   w     w     W     W     H     H     t     t        #");
-  m.add("#   wwwwwww     WWWWWWW     HHHHHHH     ttttttt        #");
+  m.add("#                                                      #");
+  m.add("#                                                      #");
+  m.add("#                                                      #"); 
+  m.add("#                                                      #");
+  m.add("#                                                      #");
   m.add("#                                                      #");
   m.add("#                                                      #");
   m.add("########################################################");      
- 
+  
   int rect_width = WIDTH / RAY_AMOUNT;
   ray ray_array[RAY_AMOUNT];  
-   
+
+  bool shooting = false;
    
   auto time_start   =   std::chrono::steady_clock::now();
   auto time_end     =   std::chrono::steady_clock::now();
@@ -63,30 +64,44 @@ int main()
 
 
   sf::Texture Thands;
-  if (!Thands.loadFromFile("hands.png"))
+  sf::Texture Tshands;
+
+  
+  if (!Thands.loadFromFile("images/hands.png"))
     {
       std::cout << "Cant load texture" << std::endl;
       return 0;
     }
+  if (!Tshands.loadFromFile("images/lambda.png"))
+    {
+      std::cout << "Cant load texture" << std::endl;
+      return 0;
+    } 
+
   sf::Sprite hands(Thands);
+  sf::Sprite shands(Tshands);
+  
   hands.setPosition(sf::Vector2f(WIDTH / 2 - 250, HEIGHT - 200));
   hands.setScale(sf::Vector2f(2.5, 2.5));
 
+  shands.setPosition(hands.getPosition());  
+  shands.setScale(hands.getScale()); 
+  
   while (window.isOpen())   
     {
       time_start = std::chrono::steady_clock::now(); 
-       
+        
       player_swing_set = sin(player_swing) * 6.5;
       if(player_swing >= PI) player_swing = 0;
    
       ray_trace(&m, &p, ray_array);   
             
-      handle_input(&player_swing, (double)time_diff_ms, &window, &p, &m);      
-      draw(player_swing_set, rect_width, ray_array, &window, &p, &m, &hands);
-
- 
+      handle_input(&player_swing, (double)time_diff_ms, &window, &p, &m, &shooting);      
+      draw(player_swing_set, rect_width, ray_array, &window, &p, &m, &hands, &shands,(double)time_diff_ms, &shooting);
+  
+  
       window.display();   
-      window.clear(sf::Color::Black);
+      window.clear(sf::Color::Black);  
 
        
       time_end     = std::chrono::steady_clock::now();
@@ -96,6 +111,7 @@ int main()
       return 0;
 }
    
+ 
  
  
  
