@@ -48,7 +48,7 @@ struct ray
   
   double distance;
   double tdistance;
-
+  /* Chars position NOTE: Change into a Vector2 */
   short c_x;
   short c_y;
   
@@ -96,10 +96,11 @@ struct Map
   }
 };
 
-int fix(int n){ return ((n < 0) ? 0 : (n > 250) ? 250 : n);}
-int colorval(double n){ return fix(fix((int)n) % 255); }
+int fix(int n){ return ((n < 0) ? 0 : (n > 250) ? 250 : n);} /* NOTE: Rewrite */
+int colorval(double n){ return fix(fix((int)n) % 255);} 
+
 int go_up(double n) { return (unsigned int)(n); }
-//int go_up(double v){ return v + (1 - abs(v - (unsigned int)v)) ;}
+
 
 char player_block(Player p, Map m){ return m.get_item((int)p.x, (int)p.y); }
 
