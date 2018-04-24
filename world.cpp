@@ -187,8 +187,8 @@ handle_input(double *player_swing, double time_diff, sf::RenderWindow *window, P
   while (window->pollEvent(event))
     if (event.type == sf::Event::Closed) window->close();
 
-  short array_size       = 5;
-  char walkable_blocks[] = { ' ' , 'H', 'W', 'w', 'o'};
+  short array_size       = 4;
+  char walkable_blocks[] = { ' ' , 'H', 'w', 'o'};
 
 
   
@@ -320,7 +320,7 @@ draw(double player_swing_set, short rect_width, ray *array_pointer, sf::RenderWi
       case 'c':
 	rectangle.setFillColor(sf::Color(244 - r.distance,
 					 164 - r.distance,
-					 96 - r.distance));
+					 96  - r.distance));
 	break;
 	
       case 'r': /* Color r */

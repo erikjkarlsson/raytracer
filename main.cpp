@@ -15,7 +15,7 @@
 int main()
 {  
   
-  sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "ray_tracer_test");
+  sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "MathMagics");
   
   double player_swing     = 0;
   double player_swing_set = 0; 
@@ -32,25 +32,25 @@ int main()
   m.add("g          #   #      #   c   #      #     #      #    #");
   m.add("g          c   c      #   #   #      #     #      #    #");
   m.add("g          #   #      #   r   ###c####     c      #c####");
-  m.add("g          #   #      c   #          #     #      c    #");
+  m.add("g          #   #      c   #          W     #      c    #");
   m.add("#####c##############c############c####     ######c######"); 
-  m.add("#                             #      #     #           #");
-  m.add("#                             #      c     c           #");
-  m.add("#                      p      #      #     #           #");
-  m.add("#                             ##c############g#r#c#r#g##");
-  m.add("#                                          #           #");
-  m.add("#                                          #           #");
-  m.add("#   #    #                                 ######c######");
-  m.add("#   #    #                                             #"); 
-  m.add("#   #    #                                             #");
-  m.add("#                                                      #");
-  m.add("#                                                      #");
-  m.add("#                                                      #");
-  m.add("#                                                      #"); 
-  m.add("#                                                      #");
-  m.add("#                                                      #");
-  m.add("#                                                      #");
-  m.add("#                                                      #");
+  m.add("#              #       #      #      #     #           #");
+  m.add("#              #       #      #      c     c    t  t   #");
+  m.add("#              #       #      #      #     #           #");
+  m.add("#              #######c#      ##c######www###g#r#c#r#g##");
+  m.add("# t  t  t  t   #       ##    ##            #           #");
+  m.add("#              c       W      # t  t  t  t #           #");
+  m.add("# t  t  t  t   #       #                   ######c######");
+  m.add("#              ################ t  t  t  t #           #"); 
+  m.add("# t  t  t  t   #t t t t t t t #            #           #");
+  m.add("#                                          ######c######");
+  m.add("# t  t  t  t                               #           #");
+  m.add("#              #t t t t t t t #            #           #");
+  m.add("################################           ######c######"); 
+  m.add("#tttttttttttttttttttttttttttttt#           c           #");
+  m.add("#tt   t   t   t   t   t   t   t#           #           #");
+  m.add("#t  t   t   t   t   t   t   t              # t t t t t #");
+  m.add("#tttttttttttttttttttttttttttttt#           W           #");
   m.add("########################################################");      
   
   int rect_width = WIDTH / RAY_AMOUNT;
