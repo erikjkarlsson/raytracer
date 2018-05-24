@@ -1,0 +1,145 @@
+* Programmerings project: Raytracer spel (MathMagics)
+** Förord
+# Namn: Erik Karlsson  Klass: 2F
+Jag kommer att programmera en 2.5d raytracer, som jag kommer att använda för
+att skapa ett fps spel.
+
+Jag använder mig av SFML för att generera 2D grafik,
+och jag programmerar i C++. Kommentarerna i programmet
+
+kommer att skrivas på engelska då spelet/raytracern ligger
+upp på github och jag vill då att alla ska kunna förstå
+funktionaliteten
+
+All kod är skriven i GPLv3 (eller senare version)
+då jag gillar filosofin bakom fri mjukvara.
+
+All kod finns på github i
+https://www.github.com/hotdogwizard/raytracer
+
+** Filstruktur
+Struktureringen på filerna är följande:
+> main.cpp (Huvudfil innehåller main loopen)
+  > player.cpp  (Innehåller player klassen obs: väldigt liten fil)
+  > world.cpp   (Innehåller de mesta funktinerna så som raytracern)
+> Makefile    (används med GNU Make för att smidigt kompilera på Linux)
+> run_game.sh (BASH fil som innehåller alla kommandon som behöver för att kompilera på Linux)
+> img\        (Filmapp som innehåller alla bilder)
+** Kontroller (Sammanfattning)
+Gå runt med w,s,a och d.
+Interagera med space
+Vänd med höger piltangent och vänster piltangent.
+Justera F.O.V (Field of view) med ner piltangent och upp piltangent.
+** Planering
+Jag kommer först att börja med att testa så att jag vet
+att alla librarys fungerar.
+
+Så jag använder SFMLs test mall för att se att allt fungerar.
+
+Sedan skriver jag klasser för spelaren och där jag lagrar
+informationen om banan. Lagrar banan i en string array då
+detta går att redigera i en vanlig texteditor och är ganska
+enkelt att implomentera.
+
+Efter det är klart börjar jag att skriva en raytracer efter pseudokoden nedan
+*** Raytracer
+Raytracer pseudokod:
+ray shoot_ray(Map *m, Player *p, uint16_t ray_n, double fov)
+{ /* SHOOT RAY FROM PLAYERS POSITION IN A POSITION
+   * RETURN THE FIRST SOLID COLORED BLOCK THAT IT HITS
+   * AND KEEP COUNT OF THE NON SOLID BLOCKS
+   */
+  
+  double   incr           = 0.05; /* INCREMENT SIZE / ACCURACY */
+  uint16_t max_ray_length = 32;   /* MAX LOOP ITERATIONS       */
+  double   ray_length     = 0;    /* RAY LENGTH                */ 
+  
+  /* PRECALCULATIONS */
+
+  double additional = 0;                   /* FOR EMULATION OF NON EUCLIDEAN GEOMETRY   */
+  double angle =  (p->dir - p->fov / 2.0); /* ANGLE OF THE LEFTEST SIDE OF PLAYERS FOV  */
+  angle += (p->fov / RAY_AMOUNT) * ray_n;  /* GET THE ray_n'TH RAY ANGLE (THE ONE USED) */
+
+  double pos_x = cos(angle);
+  double pos_y = sin(angle);
+  uint32_t ray_x;
+  uint32_t ray_y;
+  char item;
+  ray r;
+  
+  bool hit_obj = false;
+  while (!hit_obj && (ray_length < max_ray_length))
+    { 
+      /* MOVE FORWARD  */
+      ray_length += incr; 
+
+      /* CURRENT POSITION IN CORDINATE SYSTEM  */
+      ray_x = (p->x + (ray_length * pos_x));
+      ray_y = (p->y + (ray_length * pos_y));
+
+      /* GET THE BLOCK IN THE MAP FOR THE CURRENT POSITION  
+       * IF THIS IS A TRANSPARENT BLOCK OR OUTSIDE OF BOUNDS
+       * IT WILL BE IGNORED
+       */
+      item = m->get_item(go_up(ray_x), go_up(ray_y)); 
+
+      /* COMPARE BLOCKS AND ACT ACCORDINGLY */
+      if (item != ' '){
+	hit_obj = true; /* THE RAY HAS HIT SOMETHING SOLID */
+      }
+  }
+  r.init_ray(item,                        /* THE HIT CHAR                    */
+	     ray_length,                  /* DISTANCE                        */
+	     go_up(ray_x), go_up(ray_y)); /* CORDINATES OF HIT BLOCK (SOLID) */
+  return r;
+}
+
+** Fortsättning planering
+När det är klart så testar jag allt med bara några rays och printar ut avståndet
+till alla väggarna.
+
+Efter det så skriver jag en funktion som använder SFML för att rita ut
+vertikala pelare där en lång pelare symboliserar ett kort värde på rayen
+och en kort pelare ett stort värde på rayen. Detta för att ge illusionen
+om perspektiv och 3 dimensionellhet.
+
+Efter det så provar jag med ca 250 rays på ett 500px brett fönster.
+Alltså varje pelare är 2px bred.
+
+Sedan så implomenterar jag olika blocks i min map klass som består av
+olika karaktärer så som r, g, b osv.. Detta byggs in i min render funktion så
+att det blir olika färg på pelarna.
+
+Jag implomenterar ochså kollition detection på spelaren och blocken samt 
+input så att spelaren kan gå omkring.
+
+Om jag hinner så lägger jag till objekts, händer på spelaren, pickups och dörrar samt
+texturemapping till blocken.
+** Dokumentation
+*** Resultat
+Jag tycker att det gick jätte bra att skriva min raytracer. Hade inga
+riktigt stora bugg så det gick frammåt snabbt. Jag använde mig av 
+Github så att jag lätt kunde köra back ups och rollbacks. Detta gjorde
+även det enklare att jobba mellan olika datorer. Eftersom att jag arbetade
+på Linux så var det busenkelt för mig att fixa ner alla dependencys och
+att kompilera. För att kompilera så använde jag mig av en GNU Makefile, vilket
+är en fil där man kan definiera olika metoder för kompilering och linka alla librarys
+så om man vill till exempel installera spelet så skriver man bara
+>make install
+och om man vill ta bort det 
+>make remove
+Detta gjorde mitt workflow mycket effektivt och snabbt.
+
+Jag kodade i texteditorn GNU Emacs som jag konfigurerade till att fungera
+bra med C++. Texteditorn tillät mig att ha flera fönster öppna så jag kunde
+tillexempel ha ett för kod, ett för en terminal, och ett för debugging.
+
+Jag komenterade koden medans jag skrev så att jag senare skulle förstå de 
+funktioner som jag implomenterade kl 5:00 mitt i natten. Jag försökte även att
+följa GNUs standard formatering på C++ kod.
+
+Spelet kör relativt väl även på min 7år gammla thinkpad x201 (ca >50fps genomsnitt).
+Men eftersom att min Raytracer är iterativ med många iterationer så kan den bli
+trög när man kollar på saker långt bort eller med många rays. Jag optimerade den lite
+genom att ändra 
+*** Utvärdering
