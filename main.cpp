@@ -31,7 +31,14 @@ int main()
   p.x   = 3;
   p.y   = 3;  
   p.fov = 2; 
-     
+
+  /* 'r','g','b' = COLORS
+   * 'c'         = CLOSED DOOR
+   * 't'         = TALL BLOCK
+   * 'W'         = TRICK WALL (TRANSFORM INTO SOLID AT 2 METERS)
+   * 'w'         = TRICK WALL (TRANSFORM INTO AIR   AT 2 MATERS)
+   * '#'         = NORMAL WHITE WALL
+   */
   m.add("#ggggggggggg####rgbrgb################rrrrr#############");
   m.add("g          #   #      #   c   #      #     #      #    #");
   m.add("g          c   c      #   #   #      #     #      #    #");
@@ -62,7 +69,8 @@ int main()
 
   /* THE RAYTRACED RAYS */
   ray ray_array[RAY_AMOUNT];           
-  
+
+  /* DRAWS HANDS WHEN SET TO TRUE */
   bool shooting = false;
 
   /* DELTA TIME */
@@ -83,8 +91,11 @@ int main()
   sf::Sprite shands(Tshands);
 
   /* INITIALIZE BOTH HANDS */
+  
+  /* "NORMAL HANDS"   */
   hands.setPosition(sf::Vector2f(WIDTH / 2 - 250, HEIGHT - 200));
   hands.setScale(sf::Vector2f(2.5, 2.5));
+  /* "SHOOTING HANDS" */
   shands.setPosition(hands.getPosition());  
   shands.setScale(hands.getScale()); 
   
@@ -116,9 +127,3 @@ int main()
     }    
       return 0; 
 }
-   
- 
- 
- 
- 
- 
