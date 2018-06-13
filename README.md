@@ -3,6 +3,7 @@
 Experimental 2.5 dimensional raytracer written in C++ using SFML.
 
 ## Prerequisites:
+  - UNIX (optional)
   - libsfml (sfml2 library)
   - GNU-make
   - c++ compiler
